@@ -20,6 +20,10 @@ namespace MathematicalLinguisticsTask2
     /// </summary>
     public partial class MainWindow : Window
     {
+        public Automat Automat
+        {
+            get { return DataContext as Automat; }
+        }
         public MainWindow()
         {
             InitializeComponent();
