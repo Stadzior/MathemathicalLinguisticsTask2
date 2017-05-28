@@ -41,9 +41,9 @@ namespace MathematicalLinguisticsTask2
                     var _currentPosition = Dispatcher.Invoke(() => Automat.CurrentPosition);
                     while (_currentPosition < Automat.Word.Length && !Automat.CurrentState.Equals("Q11") && !_tokenSource.IsCancellationRequested)
                     {
-                        Dispatcher.Invoke(() => TuringMachine.PerformStep());
-                        Thread.Sleep(2000);
-                        _currentPosition = Dispatcher.Invoke(() => TuringMachine.HeadPosition);
+                        Dispatcher.Invoke(() => Automat.PerformStep());
+                        Thread.Sleep(1000);
+                        _currentPosition = Dispatcher.Invoke(() => Automat.CurrentPosition);
                     }
                     Dispatcher.Invoke(() => false);
                 }, _tokenSource.Token);
@@ -57,8 +57,8 @@ namespace MathematicalLinguisticsTask2
 
         private void BtnStep_Click(object sender, RoutedEventArgs e)
         {
-            TuringMachine.PerformStep();
-            btnStep.IsEnabled = TuringMachine.HeadPosition > 0;
+            Automat.PerformStep();
+            btnStep.IsEnabled = Automat.CurrentPosition < Automat.Word.Length;
         }
 
         private void BtnLoadFile_Click(object sender, RoutedEventArgs e)

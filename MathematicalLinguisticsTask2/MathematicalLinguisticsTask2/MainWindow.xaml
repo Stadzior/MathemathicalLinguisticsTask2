@@ -42,34 +42,12 @@
             Click="BtnStartStop_Click"
             Content="Start"
             FontSize="24" />
-        <TextBox
-            x:Name="txtState"
-            Width="70"
-            Height="68"
-            Margin="10,10,0,0"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            FontSize="24"
-            RenderTransformOrigin="0.92,0.84"
-            Text="{Binding CurrentState.Name}"
-            TextWrapping="Wrap" />
         <Canvas>
             <ListView
-                Canvas.Left="100"
-                Canvas.Top="10"
-                Width="100"
-                Height="64">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn />
-                    </GridView>
-                </ListView.View>
-            </ListView>
-            <ListView
                 Canvas.Left="10"
-                Canvas.Top="92"
+                Canvas.Top="10"
                 Width="190"
-                Height="84">
+                Height="166">
                 <ListView.View>
                     <GridView>
                         <GridViewColumn />
@@ -81,7 +59,19 @@
                 Canvas.Left="235"
                 Canvas.Top="10"
                 Width="367"
-                Height="64"
+                Height="34"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="24"
+                RenderTransformOrigin="0.92,0.84"
+                Text="{Binding CurrentState.Name}"
+                TextWrapping="Wrap" />
+            <TextBox
+                x:Name="txtState_Copy1"
+                Canvas.Left="235"
+                Canvas.Top="49"
+                Width="367"
+                Height="34"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 FontSize="24"

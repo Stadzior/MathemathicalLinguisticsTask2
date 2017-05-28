@@ -18,8 +18,6 @@ namespace MathematicalLinguisticsTask2
             }
         }
 
-        public IList<State> PossibleNextStates { get; set; }
-
-
+        public Dictionary<State, Func<int, bool>> PossibleNextStates { get; set; }
     }
 }
