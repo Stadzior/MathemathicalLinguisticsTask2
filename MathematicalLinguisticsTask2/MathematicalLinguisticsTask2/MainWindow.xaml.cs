@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -38,7 +39,8 @@ namespace MathematicalLinguisticsTask2
                 await Task.Factory.StartNew(() =>
                 {
                     var _currentPosition = Dispatcher.Invoke(() => Automat.CurrentPosition);
-                    while (_currentPosition < Automat.Word.Length && !_tokenSource.IsCancellationRequested)
+                    var currentWordLength = Dispatcher.Invoke(() => Automat.Word.Length);
+                    while (_currentPosition < currentWordLength && !_tokenSource.IsCancellationRequested)
                     {
                         Dispatcher.Invoke(() => Automat.PerformStep());
                         Thread.Sleep(1000);
@@ -73,6 +75,9 @@ namespace MathematicalLinguisticsTask2
                             Automat.ReadedWords.Add(word);
                     }
                 }
+
+                btnStartStop.IsEnabled = Automat.ReadedWords.Any();
+                btnStep.IsEnabled = Automat.ReadedWords.Any();
             }
         }
     }

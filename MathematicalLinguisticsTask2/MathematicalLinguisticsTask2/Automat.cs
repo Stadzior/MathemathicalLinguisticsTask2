@@ -67,6 +67,9 @@ namespace MathematicalLinguisticsTask2
 
         public Automat()
         {
+            ReadedWords = new ObservableCollection<string>();
+            AcceptedWords = new ObservableCollection<string>();
+
             States = new ObservableCollection<State>()
             {
                 new State() { Name = "Q0"},
@@ -131,7 +134,6 @@ namespace MathematicalLinguisticsTask2
         {
             ProcessedWord += Word[CurrentPosition];
 
-
             CurrentPosition++;
 
             if (CurrentPosition == Word.Length)
@@ -151,8 +153,7 @@ namespace MathematicalLinguisticsTask2
         public void Reset()
         {
             CurrentPosition = 0;
-            _currentWordIndex = 0;
-        
+            _currentWordIndex = 0;  
         }
     }
 }

@@ -21,7 +21,8 @@
             VerticalAlignment="Top"
             Click="BtnStep_Click"
             Content="Step"
-            FontSize="24" />
+            FontSize="24"
+            IsEnabled="False" />
         <Button
             x:Name="btnLoadFile"
             Width="146"
@@ -41,16 +42,18 @@
             VerticalAlignment="Top"
             Click="BtnStartStop_Click"
             Content="Start"
-            FontSize="24" />
+            FontSize="24"
+            IsEnabled="False" />
         <Canvas>
             <ListView
                 Canvas.Left="10"
                 Canvas.Top="10"
                 Width="190"
-                Height="166">
+                Height="166"
+                ItemsSource="{Binding StateTraces}">
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn />
+                        <GridViewColumn Width="150" Header="Description" />
                     </GridView>
                 </ListView.View>
             </ListView>
@@ -64,7 +67,7 @@
                 VerticalAlignment="Top"
                 FontSize="24"
                 RenderTransformOrigin="0.92,0.84"
-                Text="{Binding CurrentState.Name}"
+                Text="{Binding Word}"
                 TextWrapping="Wrap" />
             <TextBox
                 x:Name="txtState_Copy1"
@@ -76,19 +79,20 @@
                 VerticalAlignment="Top"
                 FontSize="24"
                 RenderTransformOrigin="0.92,0.84"
-                Text="{Binding CurrentState.Name}"
+                Text="{Binding ProcessedWord}"
                 TextWrapping="Wrap" />
+            <ListView
+                Canvas.Left="333"
+                Canvas.Top="49"
+                Width="136"
+                Height="127"
+                ItemsSource="{Binding AcceptedWords}" />
             <ListView
                 Canvas.Left="205"
                 Canvas.Top="49"
-                Width="264"
-                Height="127">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+                Width="123"
+                Height="127"
+                ItemsSource="{Binding ReadedWords}" />
         </Canvas>
     </Grid>
 </Window>
