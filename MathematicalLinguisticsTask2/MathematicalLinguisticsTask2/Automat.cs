@@ -31,6 +31,9 @@ namespace MathematicalLinguisticsTask2
             }
         }
 
+        public bool WordIsAcceptable
+            => StateTraces.Any(trace => trace.HasAcceptableState);
+
         private string _currentStates;
         public string CurrentStates
         {
@@ -43,7 +46,7 @@ namespace MathematicalLinguisticsTask2
 
         public ObservableCollection<State> States { get; set; }
 
-        public ObservableCollection<StateTrack> StateTracks { get; set; }
+        public ObservableCollection<StateTrack> StateTraces { get; set; }
 
         private int _currentPosition;
         public int CurrentPosition
@@ -71,8 +74,8 @@ namespace MathematicalLinguisticsTask2
                 new State() { Name = "Q7"},
                 new State() { Name = "Q8"},
                 new State() { Name = "Q9"},
-                new State() { Name = "Q8"},
-                new State() { Name = "Q9"},
+                new State() { Name = "Q10"},
+                new State() { Name = "Q11", IsAcceptable = true},
             };
 
             InitializeStateTree();
@@ -117,6 +120,11 @@ namespace MathematicalLinguisticsTask2
             q10.PossibleNextStates.Add(q11, value => value == 9);
 
             q11.PossibleNextStates.Add(q11, value => value > -1 && value < 10);
+        }
+
+        public void PerformStep()
+        {
+
         }
     }
 }

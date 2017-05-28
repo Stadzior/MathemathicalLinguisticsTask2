@@ -12,6 +12,10 @@ namespace MathematicalLinguisticsTask2
     public class StateTrack : ObservableCollection<State>
     {
         public bool IsWrong { get; set; }
+        public bool HasAcceptableState
+        {
+            get { return this.Any(s => s.IsAcceptable); }
+        }
 
         private string _description;
         public string Description

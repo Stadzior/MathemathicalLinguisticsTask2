@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:MathematicalLinguisticsTask3"
+    xmlns:local="clr-namespace:MathematicalLinguisticsTask2"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="647"
@@ -14,9 +14,9 @@
     <Grid Margin="0,0,2,0">
         <Button
             x:Name="btnStep"
-            Width="123"
-            Height="58"
-            Margin="367,113,0,0"
+            Width="146"
+            Height="35"
+            Margin="482,98,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnStep_Click"
@@ -24,9 +24,9 @@
             FontSize="24" />
         <Button
             x:Name="btnLoadFile"
-            Width="123"
-            Height="58"
-            Margin="239,113,0,0"
+            Width="146"
+            Height="35"
+            Margin="482,138,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnLoadFile_Click"
@@ -34,9 +34,9 @@
             FontSize="18" />
         <Button
             x:Name="btnStartStop"
-            Width="132"
-            Height="58"
-            Margin="495,113,0,0"
+            Width="147"
+            Height="35"
+            Margin="482,58,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnStartStop_Click"
@@ -56,9 +56,9 @@
             </ListView>
             <TextBox
                 x:Name="txtState_Copy"
-                Canvas.Left="235"
+                Canvas.Left="205"
                 Canvas.Top="10"
-                Width="367"
+                Width="216"
                 Height="34"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -68,9 +68,9 @@
                 TextWrapping="Wrap" />
             <TextBox
                 x:Name="txtState_Copy1"
-                Canvas.Left="235"
-                Canvas.Top="49"
-                Width="367"
+                Canvas.Left="426"
+                Canvas.Top="10"
+                Width="203"
                 Height="34"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -78,6 +78,17 @@
                 RenderTransformOrigin="0.92,0.84"
                 Text="{Binding CurrentState.Name}"
                 TextWrapping="Wrap" />
+            <ListView
+                Canvas.Left="205"
+                Canvas.Top="49"
+                Width="264"
+                Height="127">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </Canvas>
     </Grid>
 </Window>

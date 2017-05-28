@@ -33,13 +33,14 @@ namespace MathematicalLinguisticsTask2
 
             if (_started)
             {
+                
                 btnStartStop.Content = "Stop";
                 _tokenSource = new CancellationTokenSource();
 
                 await Task.Factory.StartNew(() =>
                 {
                     var _currentPosition = Dispatcher.Invoke(() => Automat.CurrentPosition);
-                    while (_currentPosition < Automat.Word.Length && !Automat.CurrentState.Equals("Q11") && !_tokenSource.IsCancellationRequested)
+                    while (_currentPosition < Automat.Word.Length && !_tokenSource.IsCancellationRequested)
                     {
                         Dispatcher.Invoke(() => Automat.PerformStep());
                         Thread.Sleep(1000);
@@ -63,12 +64,17 @@ namespace MathematicalLinguisticsTask2
 
         private void BtnLoadFile_Click(object sender, RoutedEventArgs e)
         {
-            var filePath = new OpenFileDialog().FileName;
-            ReadedWords = new Dictionary<string, bool>();
-            using (StreamReader sr = new StreamReader(filePath))
+            var dialog = new OpenFileDialog();
+            dialog.ShowDialog();
+
+            if (!string.IsNullOrWhiteSpace(dialog.FileName))
             {
-                foreach (var word in sr.ReadToEnd().Split('#'))
-                    ReadedWords.Add(word, false);
+                ReadedWords = new Dictionary<string, bool>();
+                using (StreamReader sr = new StreamReader(dialog.FileName))
+                {
+                    foreach (var word in sr.ReadToEnd().Split('#'))
+                        ReadedWords.Add(word, false);
+                }
             }
         }
     }

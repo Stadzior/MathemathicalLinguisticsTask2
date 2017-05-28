@@ -18,6 +18,13 @@ namespace MathematicalLinguisticsTask2
             }
         }
 
+        public bool IsAcceptable { get; set; }
+
         public Dictionary<State, Func<int, bool>> PossibleNextStates { get; set; }
+
+        public State()
+        {
+            PossibleNextStates = new Dictionary<State, Func<int, bool>>();
+        }
     }
 }
