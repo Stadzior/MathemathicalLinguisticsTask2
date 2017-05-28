@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace MathematicalLinguisticsTask2
 {
-    public class StateTrack : ObservableCollection<State>
+    public class StateTrace : ObservableCollection<State>
     {
         public bool IsWrong { get; set; }
         public bool HasAcceptableState
@@ -37,6 +37,12 @@ namespace MathematicalLinguisticsTask2
         protected virtual void OnPropertyChanged(string propertyName)
         {
             OrdinaryPropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public new void Add(State item)
+        {
+            base.Add(item);
+            Description += $"->{item.Name}";
         }
     }
 }

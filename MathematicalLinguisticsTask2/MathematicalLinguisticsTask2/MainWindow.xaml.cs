@@ -57,7 +57,18 @@ namespace MathematicalLinguisticsTask2
 
         private void BtnStep_Click(object sender, RoutedEventArgs e)
         {
-            Automat.PerformStep();
+            if(Automat.CurrentPosition < Automat.Word.Length)
+                Automat.PerformStep();
+            else
+            {
+                btnStartStop.IsEnabled = false;
+                btnStep.IsEnabled = false;
+
+                if (Automat.WordIsAcceptable)
+                   Automat.AcceptedWords.Add(Automat.Word);
+
+                Automat.CurrentPosition = 0;
+            }
         }
 
         private void BtnLoadFile_Click(object sender, RoutedEventArgs e)
@@ -75,10 +86,20 @@ namespace MathematicalLinguisticsTask2
                             Automat.ReadedWords.Add(word);
                     }
                 }
-
-                btnStartStop.IsEnabled = Automat.ReadedWords.Any();
-                btnStep.IsEnabled = Automat.ReadedWords.Any();
             }
+        }
+
+        private void ListView_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            var wordAlreadyAccepted = Automat.AcceptedWords.Contains(e.AddedItems[0]);
+            btnStartStop.IsEnabled = !wordAlreadyAccepted;
+            btnStep.IsEnabled = !wordAlreadyAccepted;
+
+            Automat.Word = e.AddedItems[0].ToString();
+            Automat.ProcessedWord = string.Empty;
+            Automat.CurrentPosition = 0;
+            Automat.StateTraces.Clear();
+            Automat.StateTraces.Add(new StateTrace() { Automat.States.Single(s => s.Name.Equals("Q0")) });
         }
     }
 }

@@ -33,25 +33,11 @@ namespace MathematicalLinguisticsTask2
         public bool WordIsAcceptable
             => StateTraces.Any(trace => trace.HasAcceptableState);
 
-        private string _currentStates;
-        public string CurrentStates
-        {
-            get { return _currentStates; }
-            set
-            {
-                SetField(ref _currentStates, value);
-            }
-        }
-
         public ObservableCollection<State> States { get; set; }
-
-        public ObservableCollection<StateTrack> StateTraces { get; set; }
-
-
+        public ObservableCollection<State> CurrentStates { get; set; }
+        public ObservableCollection<StateTrace> StateTraces { get; set; }
         public ObservableCollection<string> ReadedWords { get; set; }
         public ObservableCollection<string> AcceptedWords { get; set; }
-
-        private int _currentWordIndex;
 
         private int _currentPosition;
         public int CurrentPosition
@@ -69,6 +55,7 @@ namespace MathematicalLinguisticsTask2
         {
             ReadedWords = new ObservableCollection<string>();
             AcceptedWords = new ObservableCollection<string>();
+            StateTraces = new ObservableCollection<StateTrace>();
 
             States = new ObservableCollection<State>()
             {
@@ -87,6 +74,14 @@ namespace MathematicalLinguisticsTask2
             };
 
             InitializeStateTree();
+
+            CurrentStates = new ObservableCollection<State>() { States.Single(s => s.Name.Equals("Q0")) };
+
+            StateTraces.Add(
+                new StateTrace()
+                {
+                    States.Single(s => s.Name.Equals("Q0"))
+                });
         }
 
         private void InitializeStateTree()
@@ -104,56 +99,57 @@ namespace MathematicalLinguisticsTask2
             var q10 = States.Single(s => s.Name.Equals("Q10"));
             var q11 = States.Single(s => s.Name.Equals("Q11"));
 
-            q0.PossibleNextStates.Add(q0, value => value > -1 && value < 10);
-            q0.PossibleNextStates.Add(q1, value => value == 0);
-            q0.PossibleNextStates.Add(q2, value => value == 1);
-            q0.PossibleNextStates.Add(q3, value => value == 2);
-            q0.PossibleNextStates.Add(q4, value => value == 3);
-            q0.PossibleNextStates.Add(q5, value => value == 4);
-            q0.PossibleNextStates.Add(q6, value => value == 5);
-            q0.PossibleNextStates.Add(q7, value => value == 6);
-            q0.PossibleNextStates.Add(q8, value => value == 7);
-            q0.PossibleNextStates.Add(q9, value => value == 8);
-            q0.PossibleNextStates.Add(q10, value => value == 9);
+            q0.PossibleNextStates.Add(q0, value => new HashSet<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.Contains(value));
+            q0.PossibleNextStates.Add(q1, value => value == '0');
+            q0.PossibleNextStates.Add(q2, value => value == '1');
+            q0.PossibleNextStates.Add(q3, value => value == '2');
+            q0.PossibleNextStates.Add(q4, value => value == '3');
+            q0.PossibleNextStates.Add(q5, value => value == '4');
+            q0.PossibleNextStates.Add(q6, value => value == '5');
+            q0.PossibleNextStates.Add(q7, value => value == '6');
+            q0.PossibleNextStates.Add(q8, value => value == '7');
+            q0.PossibleNextStates.Add(q9, value => value == '8');
+            q0.PossibleNextStates.Add(q10, value => value == '9');
 
-            q1.PossibleNextStates.Add(q11, value => value == 0);
-            q2.PossibleNextStates.Add(q11, value => value == 1);
-            q3.PossibleNextStates.Add(q11, value => value == 2);
-            q4.PossibleNextStates.Add(q11, value => value == 3);
-            q5.PossibleNextStates.Add(q11, value => value == 4);
-            q6.PossibleNextStates.Add(q11, value => value == 5);
-            q7.PossibleNextStates.Add(q11, value => value == 6);
-            q8.PossibleNextStates.Add(q11, value => value == 7);
-            q9.PossibleNextStates.Add(q11, value => value == 8);
-            q10.PossibleNextStates.Add(q11, value => value == 9);
+            q1.PossibleNextStates.Add(q11, value => value == '0');
+            q2.PossibleNextStates.Add(q11, value => value == '1');
+            q3.PossibleNextStates.Add(q11, value => value == '2');
+            q4.PossibleNextStates.Add(q11, value => value == '3');
+            q5.PossibleNextStates.Add(q11, value => value == '4');
+            q6.PossibleNextStates.Add(q11, value => value == '5');
+            q7.PossibleNextStates.Add(q11, value => value == '6');
+            q8.PossibleNextStates.Add(q11, value => value == '7');
+            q9.PossibleNextStates.Add(q11, value => value == '8');
+            q10.PossibleNextStates.Add(q11, value => value == '9');
 
-            q11.PossibleNextStates.Add(q11, value => value > -1 && value < 10);
+            q11.PossibleNextStates.Add(q11, value => new HashSet<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' }.Contains(value));
         }
 
         public void PerformStep()
         {
             ProcessedWord += Word[CurrentPosition];
 
-            CurrentPosition++;
-
-            if (CurrentPosition == Word.Length)
+            char symbol = Word[CurrentPosition];
+            foreach (var state in CurrentStates)
             {
-                if(WordIsAcceptable)
-                    AcceptedWords.Add(Word);
-
-                _currentWordIndex++;
-
-                if(_currentWordIndex >= ReadedWords.Count)
-
-                CurrentPosition = 0;
             }
 
-        }
+            StateTraces[0].Add(States.Single(s => s.Name.Equals("Q0")));
 
-        public void Reset()
-        {
-            CurrentPosition = 0;
-            _currentWordIndex = 0;  
+            var possibleNextStates = CurrentStates
+                .SelectMany(s => s.PossibleNextStates
+                .Where(x => x.Value.Invoke(symbol))
+                .Select(pair => pair.Key)).ToList(); 
+
+            CurrentStates.Clear();
+
+            foreach (var state in possibleNextStates)
+            {
+                CurrentStates.Add(state);
+            }
+
+
+            CurrentPosition++;
         }
     }
 }

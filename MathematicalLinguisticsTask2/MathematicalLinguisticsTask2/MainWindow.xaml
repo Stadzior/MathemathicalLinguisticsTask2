@@ -6,8 +6,8 @@
     xmlns:local="clr-namespace:MathematicalLinguisticsTask2"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="647"
-    Height="214.677"
+    Width="665"
+    Height="268.677"
     DataContext="{StaticResource Automat}"
     ResizeMode="CanMinimize"
     mc:Ignorable="d">
@@ -16,7 +16,7 @@
             x:Name="btnStep"
             Width="146"
             Height="35"
-            Margin="482,98,0,0"
+            Margin="505,195,-12,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnStep_Click"
@@ -27,7 +27,7 @@
             x:Name="btnLoadFile"
             Width="146"
             Height="35"
-            Margin="482,138,0,0"
+            Margin="202,195,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnLoadFile_Click"
@@ -37,7 +37,7 @@
             x:Name="btnStartStop"
             Width="147"
             Height="35"
-            Margin="482,58,0,0"
+            Margin="353,195,0,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
             Click="BtnStartStop_Click"
@@ -49,14 +49,9 @@
                 Canvas.Left="10"
                 Canvas.Top="10"
                 Width="190"
-                Height="166"
-                ItemsSource="{Binding StateTraces}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Width="150" Header="Description" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+                Height="220"
+                DisplayMemberPath="Description"
+                ItemsSource="{Binding StateTraces}" />
             <TextBox
                 x:Name="txtState_Copy"
                 Canvas.Left="205"
@@ -73,7 +68,7 @@
                 x:Name="txtState_Copy1"
                 Canvas.Left="426"
                 Canvas.Top="10"
-                Width="203"
+                Width="221"
                 Height="34"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Top"
@@ -82,17 +77,25 @@
                 Text="{Binding ProcessedWord}"
                 TextWrapping="Wrap" />
             <ListView
-                Canvas.Left="333"
+                Canvas.Left="453"
                 Canvas.Top="49"
-                Width="136"
-                Height="127"
+                Width="194"
+                Height="143"
                 ItemsSource="{Binding AcceptedWords}" />
+            <ListView
+                Canvas.Left="266"
+                Canvas.Top="49"
+                Width="182"
+                Height="143"
+                ItemsSource="{Binding ReadedWords}"
+                SelectionChanged="ListView_SelectionChanged" />
             <ListView
                 Canvas.Left="205"
                 Canvas.Top="49"
-                Width="123"
-                Height="127"
-                ItemsSource="{Binding ReadedWords}" />
+                Width="56"
+                Height="143"
+                DisplayMemberPath="Name"
+                ItemsSource="{Binding CurrentStates}" />
         </Canvas>
     </Grid>
 </Window>
