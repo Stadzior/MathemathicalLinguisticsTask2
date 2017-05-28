@@ -10,7 +10,6 @@ namespace MathematicalLinguisticsTask2
 {
     public class Automat : NotifyPropertyChangedBase
     {
-
         private string _word;
         public string Word
         {
@@ -47,6 +46,12 @@ namespace MathematicalLinguisticsTask2
         public ObservableCollection<State> States { get; set; }
 
         public ObservableCollection<StateTrack> StateTraces { get; set; }
+
+
+        public ObservableCollection<string> ReadedWords { get; set; }
+        public ObservableCollection<string> AcceptedWords { get; set; }
+
+        private int _currentWordIndex;
 
         private int _currentPosition;
         public int CurrentPosition
@@ -124,7 +129,30 @@ namespace MathematicalLinguisticsTask2
 
         public void PerformStep()
         {
+            ProcessedWord += Word[CurrentPosition];
 
+
+            CurrentPosition++;
+
+            if (CurrentPosition == Word.Length)
+            {
+                if(WordIsAcceptable)
+                    AcceptedWords.Add(Word);
+
+                _currentWordIndex++;
+
+                if(_currentWordIndex >= ReadedWords.Count)
+
+                CurrentPosition = 0;
+            }
+
+        }
+
+        public void Reset()
+        {
+            CurrentPosition = 0;
+            _currentWordIndex = 0;
+        
         }
     }
 }

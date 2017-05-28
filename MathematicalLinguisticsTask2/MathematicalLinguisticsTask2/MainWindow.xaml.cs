@@ -20,8 +20,6 @@ namespace MathematicalLinguisticsTask2
         private bool _started;
         private CancellationTokenSource _tokenSource;
 
-        public Dictionary<string, bool> ReadedWords { get; set; }
-
         public MainWindow()
         {
             InitializeComponent();
@@ -46,7 +44,6 @@ namespace MathematicalLinguisticsTask2
                         Thread.Sleep(1000);
                         _currentPosition = Dispatcher.Invoke(() => Automat.CurrentPosition);
                     }
-                    Dispatcher.Invoke(() => false);
                 }, _tokenSource.Token);
             }
             else
@@ -59,7 +56,6 @@ namespace MathematicalLinguisticsTask2
         private void BtnStep_Click(object sender, RoutedEventArgs e)
         {
             Automat.PerformStep();
-            btnStep.IsEnabled = Automat.CurrentPosition < Automat.Word.Length;
         }
 
         private void BtnLoadFile_Click(object sender, RoutedEventArgs e)
@@ -69,11 +65,13 @@ namespace MathematicalLinguisticsTask2
 
             if (!string.IsNullOrWhiteSpace(dialog.FileName))
             {
-                ReadedWords = new Dictionary<string, bool>();
                 using (StreamReader sr = new StreamReader(dialog.FileName))
                 {
                     foreach (var word in sr.ReadToEnd().Split('#'))
-                        ReadedWords.Add(word, false);
+                    {
+                        if(word.IsMatchingAlphabet(Automat.Alphabet))
+                            Automat.ReadedWords.Add(word);
+                    }
                 }
             }
         }
