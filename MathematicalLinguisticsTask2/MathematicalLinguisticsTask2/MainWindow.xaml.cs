@@ -98,6 +98,8 @@ namespace MathematicalLinguisticsTask2
             Automat.Word = e.AddedItems[0].ToString();
             Automat.ProcessedWord = string.Empty;
             Automat.CurrentPosition = 0;
+            Automat.CurrentStates.Clear();
+            Automat.CurrentStates.Add(Automat.States.Single(s => s.Name.Equals("Q0")));
             Automat.StateTraces.Clear();
             Automat.StateTraces.Add(new StateTrace() { Automat.States.Single(s => s.Name.Equals("Q0")) });
         }

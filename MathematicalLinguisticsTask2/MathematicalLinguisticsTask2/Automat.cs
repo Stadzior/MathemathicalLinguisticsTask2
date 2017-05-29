@@ -31,7 +31,7 @@ namespace MathematicalLinguisticsTask2
         }
 
         public bool WordIsAcceptable
-            => StateTraces.Any(trace => trace.HasAcceptableState);
+            => CurrentStates.Any(s => s.IsAcceptable);
 
         public ObservableCollection<State> States { get; set; }
         public ObservableCollection<State> CurrentStates { get; set; }
@@ -143,7 +143,6 @@ namespace MathematicalLinguisticsTask2
                     .ForEach(s => possibleNextStates.Add(s));
             }
 
-            StateTraces[0].Add(States.Single(s => s.Name.Equals("Q0")));
 
             CurrentStates.Clear();
 
@@ -152,8 +151,20 @@ namespace MathematicalLinguisticsTask2
                 CurrentStates.Add(state);
             }
 
+            //foreach (var state in CurrentStates)
+            //{
+            //    for (int i = 0; i < StateTraces.Count; i++)
+            //    {
+            //        var trace = StateTraces[i];
+            //        var brandNewTrace = new StateTrace(trace);
+            //        brandNewTrace.Add(state);
 
-            CurrentPosition++;
+            //        if (!StateTraces.Contains(brandNewTrace))
+            //            StateTraces.Add(trace);
+            //    }
+            //}
+
+                CurrentPosition++;
         }
     }
 }

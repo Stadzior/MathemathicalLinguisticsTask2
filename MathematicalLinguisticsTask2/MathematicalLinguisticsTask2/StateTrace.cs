@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,6 +44,51 @@ namespace MathematicalLinguisticsTask2
         {
             base.Add(item);
             Description += $"->{item.Name}";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj != typeof(System.Windows.Data.BindingExpressionBase)
+    .GetField("DisconnectedItem", BindingFlags.Static | BindingFlags.NonPublic)
+    .GetValue(null))
+            {
+                bool equals = (obj as StateTrace).Count == this.Count;
+
+                foreach (var state in obj as StateTrace)
+                {
+                    if (!Contains(state))
+                    {
+                        equals = false;
+                        break;
+                    }
+                }
+
+                if (equals)
+                {
+                    foreach (var state in this)
+                    {
+                        if (!(obj as StateTrace).Contains(state))
+                        {
+                            equals = false;
+                            break;
+                        }
+                    }
+                }
+
+                return equals;
+            }
+            else
+                return base.Equals(obj);
+        }
+
+        public StateTrace()
+        {
+        }
+
+        public StateTrace(StateTrace trace)
+        {
+            foreach (var state in trace)
+                Add(state);
         }
     }
 }
