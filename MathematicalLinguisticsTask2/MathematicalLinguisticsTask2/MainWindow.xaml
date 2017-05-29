@@ -43,7 +43,8 @@
             Click="BtnStartStop_Click"
             Content="Start"
             FontSize="24"
-            IsEnabled="False" />
+            IsEnabled="False"
+            Visibility="Hidden" />
         <Canvas>
             <ListView
                 Canvas.Left="10"

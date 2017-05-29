@@ -130,16 +130,20 @@ namespace MathematicalLinguisticsTask2
             ProcessedWord += Word[CurrentPosition];
 
             char symbol = Word[CurrentPosition];
+
+            var possibleNextStates = new List<State>();
+
             foreach (var state in CurrentStates)
             {
+                var nextStates = state.PossibleNextStates
+                    .Where(x => x.Value.Invoke(symbol))
+                    .Select(pair => pair.Key);
+
+                nextStates
+                    .ForEach(s => possibleNextStates.Add(s));
             }
 
             StateTraces[0].Add(States.Single(s => s.Name.Equals("Q0")));
-
-            var possibleNextStates = CurrentStates
-                .SelectMany(s => s.PossibleNextStates
-                .Where(x => x.Value.Invoke(symbol))
-                .Select(pair => pair.Key)).ToList(); 
 
             CurrentStates.Clear();
 
